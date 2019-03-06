@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
         android:id="@+id/nav_camera"
+        android:icon="@drawable/ic_none_24dp"
         android:title="@string/addCity" />
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
+    <item
+        android:id="@+id/nav_manage"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings" />
 </menu>
