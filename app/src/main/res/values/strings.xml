@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Meteo</string>
+    <string name="connect">Se connecter</string>
+    <string name="passWordAsk">Combinaison login/mot de passe incorrecte.</string>
+    <string name="title_activity_main">Météo Grenoble</string>
+    <string name="connected_as">connecté en tant que</string>
+    <string name="evening">soirée</string>
+    <string name="afternoon">après-midi</string>
+    <string name="morning">matin</string>
+    <string name="addCity">Ajouter une ville</string>
+</resources>
