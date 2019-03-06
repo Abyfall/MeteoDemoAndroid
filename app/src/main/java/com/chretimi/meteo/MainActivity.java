@@ -2,6 +2,7 @@ package com.chretimi.meteo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -34,6 +35,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private List<ForecastDay> currForecasts;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,30 +49,78 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String value = intent.getStringExtra("userLogin");
 
+        updateForecasts();
+
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //refreshData(); // your code
+                updateForecasts(); // your code
                 pullToRefresh.setRefreshing(false);
             }
         });
+    }
+
+    /**
+     * Group unique forecast as forecastDay (all forecast for a day)
+     *
+     * @param forecasts an ordered list of forecast to group
+     * @return an ordered list of forecast
+     */
+    private List<ForecastDay> groupForecasts(List<Forecast> forecasts) {
+        Calendar calendar = GregorianCalendar.getInstance();
+        List<ForecastDay> forecastDays = new ArrayList<>();
+
+        int currDay = -1;
+        ForecastDay currForecastDays = null;
+        for (Forecast f : forecasts) {
+            Date forecastDate = f.getRawDate();
+            calendar.setTime(forecastDate);
+
+            int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
+
+            if (dayOfYear != currDay) {
+                if (currDay != -1) { // If it's not the first day
+                    forecastDays.add(currForecastDays);
+                }
+                currForecastDays = new ForecastDay(forecastDate);
+                currDay = dayOfYear;
+            }
+            currForecastDays.addForecast(f);
+        }
+
+        return forecastDays;
+    }
+
+
+    private void updateDisplay() {
 
         // Lookup the recyclerview in activity layout
         final RecyclerView rvForecast = (RecyclerView) findViewById(R.id.forecastRecycler);
 
-        // Initialize contacts
+        List<ForecastDay> days = currForecasts;
+
+        // Create adapter passing in the sample user data
+        ForecastsAdapter adapter = new ForecastsAdapter(days);
+        // Attach the adapter to the recyclerview to populate items
+        rvForecast.setAdapter(adapter);
+        // Set layout manager to position the items
+        rvForecast.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+    }
+
+    private void updateForecasts() {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String cityId = "3014728";
         String apiKey = "473f587c081395c0757c0324bedd6c31";
-        String url ="http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=" + apiKey + "&units=metric";
+        String url = "http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=" + apiKey + "&units=metric";
 
 
         final List<Forecast> forecasts = new ArrayList<>();
 
-// Request a string response from the provided URL.
+        // Request a string response from the provided URL.
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -82,17 +133,16 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject json = new JSONObject(response);
                             String cod = json.getString("cod");
 
-                            if(!cod.equals("200")){
+                            if (!cod.equals("200")) {
                                 Toast toast = Toast.makeText(context, "Http error : " + cod, duration);
                                 toast.show();
                                 return;
                             }
 
                             JSONArray list = json.getJSONArray("list");
-                            for (int i = 0; i < list.length(); i++)
-                            {
-                                int timeStamp =  list.getJSONObject(i).getInt("dt");
-                                Date weatherDate = new Date((long)timeStamp*1000);
+                            for (int i = 0; i < list.length(); i++) {
+                                int timeStamp = list.getJSONObject(i).getInt("dt");
+                                Date weatherDate = new Date((long) timeStamp * 1000);
                                 int weatherId = list.getJSONObject(i).getJSONArray("weather").getJSONObject(0).getInt("id");
                                 int temp = list.getJSONObject(i).getJSONObject("main").getInt("temp");
 
@@ -101,16 +151,8 @@ public class MainActivity extends AppCompatActivity {
                                 Forecast f = new Forecast(weatherDate, weatherId, temp);
                                 forecasts.add(f);
                             }
-
-                            List<ForecastDay> days = groupForecasts(forecasts);
-
-                            // Create adapter passing in the sample user data
-                            ForecastsAdapter adapter = new ForecastsAdapter(days);
-                            // Attach the adapter to the recyclerview to populate items
-                            rvForecast.setAdapter(adapter);
-                            // Set layout manager to position the items
-                            rvForecast.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                            // That's all!
+                            currForecasts = groupForecasts(forecasts);
+                            updateDisplay();
 
                         } catch (JSONException e) {
                             Toast toast = Toast.makeText(context, "Error: " + e.getMessage(), duration);
@@ -122,44 +164,9 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Context context = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, "That didn't work!", duration);
-                toast.show();
             }
         });
-// Add the request to the RequestQueue.
         queue.add(stringRequest);
-    }
-
-    /**
-     * Group unique forecast as forecastDay (all forecast for a day)
-     * @param forecasts an ordered list of forecast to group
-     * @return an ordered list of forecast
-     */
-    private List<ForecastDay> groupForecasts(List<Forecast> forecasts) {
-        Calendar calendar = GregorianCalendar.getInstance();
-        List<ForecastDay> forecastDays= new ArrayList<>();
-
-        int currDay = -1;
-        ForecastDay currForecastDays = null;
-        for (Forecast f : forecasts){
-            Date forecastDate = f.getRawDate();
-            calendar.setTime(forecastDate);
-
-            int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);
-
-            if(dayOfYear != currDay){
-                if(currDay != -1){ // If it's not the first day
-                    forecastDays.add(currForecastDays);
-                }
-                currForecastDays = new ForecastDay(forecastDate);
-                currDay = dayOfYear;
-            }
-            currForecastDays.addForecast(f);
-        }
-
-        return forecastDays;
     }
 
 }

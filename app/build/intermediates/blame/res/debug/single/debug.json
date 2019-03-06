@@ -68,20 +68,20 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\drawable\\design_bottom_navigation_item_background.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\animator_mtrl_btn_unelevated_state_list_anim.xml.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\animator\\mtrl_btn_unelevated_state_list_anim.xml"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_list_selector_disabled_holo_light.9.png.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xxhdpi-v4\\abc_list_selector_disabled_holo_light.9.png"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_021_snowing_1.png.flat",
-        "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_021_snowing_1.png"
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\animator_mtrl_btn_unelevated_state_list_anim.xml.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\animator\\mtrl_btn_unelevated_state_list_anim.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_scrubber_primary_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xxhdpi-v4\\abc_scrubber_primary_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_021_snowing_1.png.flat",
+        "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_021_snowing_1.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
@@ -120,12 +120,12 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\anim\\design_bottom_sheet_slide_out.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_radio_to_on_mtrl_000.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xxhdpi-v4\\abc_btn_radio_to_on_mtrl_000.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\layout_design_layout_snackbar_include.xml.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\layout\\design_layout_snackbar_include.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_radio_to_on_mtrl_000.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xxhdpi-v4\\abc_btn_radio_to_on_mtrl_000.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_ic_021_snowing_1.xml.flat",
@@ -136,20 +136,20 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xhdpi-v4\\abc_popup_background_mtrl_mult.9.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\menu_drawer_view.xml.flat",
         "source": "D:\\AndroidStudioProjects\\Meteo\\app\\src\\main\\res\\menu\\drawer_view.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_list_divider_mtrl_alpha.9.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-hdpi-v4\\abc_list_divider_mtrl_alpha.9.png"
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xhdpi-v4\\abc_popup_background_mtrl_mult.9.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\anim_abc_slide_out_bottom.xml.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_list_divider_mtrl_alpha.9.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-hdpi-v4\\abc_list_divider_mtrl_alpha.9.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\interpolator-v21_mtrl_linear_out_slow_in.xml.flat",
@@ -172,28 +172,28 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\drawable\\design_snackbar_background.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\color_design_tint_password_toggle.xml.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\color\\design_tint_password_toggle.xml"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_021_cloudy.png.flat",
         "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-xxhdpi\\ic_021_cloudy.png"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\color_design_tint_password_toggle.xml.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\color\\design_tint_password_toggle.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_tint_spinner.xml.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\color\\abc_tint_spinner.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-watch-v20_abc_dialog_material_background.xml.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-watch-v20\\abc_dialog_material_background.xml"
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_list_longpressed_holo.9.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xxhdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_text_select_handle_right_mtrl_dark.png.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xxhdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_list_longpressed_holo.9.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xxhdpi-v4\\abc_list_longpressed_holo.9.png"
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-watch-v20_abc_dialog_material_background.xml.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-watch-v20\\abc_dialog_material_background.xml"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\color-v23_abc_tint_btn_checkable.xml.flat",
@@ -228,12 +228,12 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\color\\abc_btn_colored_borderless_text_material.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_list_longpressed_holo.9.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xhdpi-v4\\abc_list_longpressed_holo.9.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_btn_bg_color_selector.xml.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\design-28.0.0.aar\\d5df9c00c49c1d6860615d8716050cf1\\res\\color\\mtrl_btn_bg_color_selector.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_list_longpressed_holo.9.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-xhdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_text_select_handle_middle_mtrl_light.png.flat",
@@ -392,12 +392,12 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\layout\\abc_activity_chooser_view.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_021_cloudy.png.flat",
-        "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_021_cloudy.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "D:\\AndroidStudioProjects\\Meteo\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_021_cloudy.png.flat",
+        "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_021_cloudy.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_021_snowing_1.png.flat",
@@ -428,24 +428,24 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-mdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png"
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_text_select_handle_left_mtrl_light.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-hdpi-v4\\abc_text_select_handle_left_mtrl_light.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\anim_abc_fade_out.xml.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\anim\\abc_fade_out.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_text_select_handle_left_mtrl_light.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-hdpi-v4\\abc_text_select_handle_left_mtrl_light.png"
-    },
-    {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_021_rain.png.flat",
-        "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_021_rain.png"
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-mdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_text_select_handle_right_mtrl_light.png.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\drawable-mdpi-v4\\abc_text_select_handle_right_mtrl_light.png"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_021_rain.png.flat",
+        "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-ldpi\\ic_021_rain.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_btn_check_material.xml.flat",
