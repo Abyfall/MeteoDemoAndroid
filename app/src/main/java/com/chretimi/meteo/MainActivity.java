@@ -126,16 +126,13 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Context context = getApplicationContext();
-                        int duration = Toast.LENGTH_SHORT;
 
                         try {
                             JSONObject json = new JSONObject(response);
                             String cod = json.getString("cod");
 
                             if (!cod.equals("200")) {
-                                Toast toast = Toast.makeText(context, "Http error : " + cod, duration);
-                                toast.show();
+                                toastErrorLog("Http error : " + cod);
                                 return;
                             }
 
@@ -155,18 +152,24 @@ public class MainActivity extends AppCompatActivity {
                             updateDisplay();
 
                         } catch (JSONException e) {
-                            Toast toast = Toast.makeText(context, "Error: " + e.getMessage(), duration);
-
-                            toast.show();
+                            toastErrorLog(e.getMessage());
                             e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                toastErrorLog(error.getMessage());
             }
         });
         queue.add(stringRequest);
     }
 
+    private void toastErrorLog(String error){
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, "Error: " + error, duration);
+
+        toast.show();
+    }
 }
