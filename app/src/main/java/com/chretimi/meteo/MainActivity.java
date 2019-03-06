@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,9 +46,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String value = intent.getStringExtra("userLogin");
 
-        Toast toast = Toast.makeText(context, getString(R.string.connected_as) + " " + value, duration);
-
-        // toast.show();
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //refreshData(); // your code
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
         // Lookup the recyclerview in activity layout
         final RecyclerView rvForecast = (RecyclerView) findViewById(R.id.forecastRecycler);

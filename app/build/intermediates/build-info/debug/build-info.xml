@@ -2,13 +2,13 @@
 <instant-run
     abi="armeabi-v7a,armeabi"
     api-level="27"
-    build-mode="FULL"
+    build-mode="COLD"
     density="xxhdpi"
     format="10"
     plugin-version="3.3.1"
-    timestamp="1551882976378"
+    timestamp="1551884868734"
     token="7381406377607345048"
-    verifier="FULL_BUILD_REQUESTED" >
+    verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
@@ -23,50 +23,13 @@
         name="verifier"
         duration="0" />
 
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\resources\instant-run\debug\resources-debug.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\instant-run-apk\debug\app-debug.apk"
-        type="SPLIT_MAIN" />
-
     <build
         build-mode="FULL"
-        timestamp="1551882976378"
+        timestamp="1551884508261"
         verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\resources\instant-run\debug\resources-debug.apk"
+            type="SPLIT" />
         <artifact
             location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
             type="SPLIT" />
@@ -74,28 +37,19 @@
             location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
             type="SPLIT" />
         <artifact
-            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
-            type="SPLIT" />
-        <artifact
             location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
         <artifact
             location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
             type="SPLIT" />
         <artifact
-            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\resources\instant-run\debug\resources-debug.apk"
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
         <artifact
             location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
@@ -106,6 +60,52 @@
         <artifact
             location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\instant-run-apk\debug\app-debug.apk"
             type="SPLIT_MAIN" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
+            type="SPLIT" />
     </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="CLASS_ADDED"
+        timestamp="1551884759789"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\resources\instant-run\debug\resources-debug.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1551884868734"
+        verifier="COLD_SWAP_REQUESTED" />
 
 </instant-run>

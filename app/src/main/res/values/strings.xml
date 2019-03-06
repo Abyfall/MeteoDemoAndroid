@@ -8,4 +8,5 @@
     <string name="afternoon">après-midi</string>
     <string name="morning">matin</string>
     <string name="addCity">Ajouter une ville</string>
+    <string name="settings">Paramètres</string>
 </resources>

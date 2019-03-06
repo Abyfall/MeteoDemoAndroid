@@ -1019,6 +1019,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_none_24dp
+drawable ic_settings_black_24dp
 drawable mtrl_snackbar_background
 drawable mtrl_tabs_default_indicator
 drawable navigation_empty_icon
@@ -1109,6 +1110,7 @@ id disableHome
 id divider
 id divider2
 id divider3
+id divider4
 id drawer_layout
 id edit_query
 id end
@@ -1162,6 +1164,7 @@ id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
 id multiply
 id nav_camera
+id nav_manage
 id nav_view
 id navigation_header_container
 id never
@@ -1181,6 +1184,7 @@ id percent
 id pin
 id progress_circular
 id progress_horizontal
+id pullToRefresh
 id radio
 id right
 id right_icon
@@ -1412,6 +1416,7 @@ string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
 string search_menu_title
+string settings
 string status_bar_notification_info_overflow
 string title_activity_main
 style AlertDialog_AppCompat
