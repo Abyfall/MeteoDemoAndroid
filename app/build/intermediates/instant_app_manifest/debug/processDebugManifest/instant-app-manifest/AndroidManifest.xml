@@ -21,6 +21,8 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <receiver android:name="com.chretimi.meteo.AlarmReceiver" />
+
         <activity
             android:name="com.chretimi.meteo.MainActivity"
             android:label="@string/title_activity_main"

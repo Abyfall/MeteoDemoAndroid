@@ -9,4 +9,7 @@
     <string name="morning">matin</string>
     <string name="addCity">Ajouter une ville</string>
     <string name="settings">Paramètres</string>
+    <string name="notify_switch">Notifier</string>
+    <string name="channel_name">defaut</string>
+    <string name="channel_description">Démo météo</string>
 </resources>
