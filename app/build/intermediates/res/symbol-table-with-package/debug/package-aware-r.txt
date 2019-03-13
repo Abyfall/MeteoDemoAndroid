@@ -1478,6 +1478,7 @@ id shortcut
 id showCustom
 id showHome
 id showTitle
+id slide_menu
 id smallLabel
 id snackbar_action
 id snackbar_text
@@ -1505,6 +1506,7 @@ id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textView2
 id text_input_password_toggle
 id textinput_counter
 id textinput_error

@@ -17,6 +17,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ForecastDay> currForecasts;
 
+    private String cityId = "3014728";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String value = intent.getStringExtra("userLogin");
 
-        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
 
             @Override
@@ -64,6 +69,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
+
+                NavigationView nv= (NavigationView) findViewById(R.id.nav_view);
+                Menu menu=nv.getMenu();
+                MenuItem lyon = menu.add(Menu.NONE, 2996944, Menu.NONE, "Lyon");
+                MenuItem grenoble = menu.add(Menu.NONE, 3014728, Menu.NONE, "Grenoble");
+                lyon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        cityId = "" + item.getItemId();
+                        updateForecasts();
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+
+                grenoble.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        cityId = "" + item.getItemId();
+                        updateForecasts();
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
+
                 Switch onOffSwitch = (Switch)  findViewById(R.id.app_notify_switch);
                 onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -172,11 +202,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateForecasts() {
+    private void updateForecasts() { // TODO async task
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String cityId = "3014728";
         String apiKey = "473f587c081395c0757c0324bedd6c31";
         String url = "http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=" + apiKey + "&units=metric";
 

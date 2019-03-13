@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -25,22 +25,40 @@
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/pullToRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-                <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/forecastRecycler"
-                    android:name="com.chretimi.meteo.ItemFragment"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    app:layoutManager="LinearLayoutManager"
-                    tools:context=".ItemFragment"
-                    tools:listitem="@layout/fragment_item" />
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Météo Grenoble"
+                        android:textSize="25dp"
+                        android:layout_margin="@dimen/text_margin"/>
+
+                    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/forecastRecycler"
+                        android:name="com.chretimi.meteo.ItemFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        app:layoutManager="LinearLayoutManager"
+                        tools:context=".ItemFragment"
+                        tools:listitem="@layout/fragment_item" />
+
+                </LinearLayout>
 
             </android.support.v4.widget.SwipeRefreshLayout>
 
