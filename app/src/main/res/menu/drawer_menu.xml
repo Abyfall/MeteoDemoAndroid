@@ -5,6 +5,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".MainActivity">
     <item
+        android:id="@+id/local_weather"
+        android:icon="@drawable/ic_location_black_24dp"
+        android:title="@string/local_weather"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/nav_add_city"
         android:icon="@drawable/ic_none_24dp"
         android:title="@string/addCity" />

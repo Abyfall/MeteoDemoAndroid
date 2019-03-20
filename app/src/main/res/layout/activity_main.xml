@@ -36,10 +36,10 @@
                     android:paddingRight="0dp">
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/label_weather_city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Météo Grenoble"
+                        android:text="Météo"
                         android:textSize="25dp"
                         android:layout_margin="@dimen/text_margin"/>
 
@@ -73,6 +73,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer_view" />
+        app:menu="@menu/drawer_menu" />
 
 </android.support.v4.widget.DrawerLayout>

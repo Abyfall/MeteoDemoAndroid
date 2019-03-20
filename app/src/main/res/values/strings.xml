@@ -12,4 +12,9 @@
     <string name="notify_switch">Notifier</string>
     <string name="channel_name">defaut</string>
     <string name="channel_description">Démo météo</string>
+    <string name="weather">Météo</string>
+    <string name="connection_impossible">Connexion impossible</string>
+    <string name="error">Erreur</string>
+    <string name="missing_location_permission">Vous devez ajouter les permissions de localisation</string>
+    <string name="local_weather">Météo locale</string>
 </resources>
