@@ -4,20 +4,16 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,9 +36,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.Map;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +52,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setRefreshing(true);
+
+        final SharedPreferences prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
+
+        ArrayList<String> citiesList = new ArrayList<String>();
+        citiesList.add("Lyon");
+        citiesList.add("Grenoble");
+
+
+        Set<String> set = new HashSet<String>();
+
+        set.addAll(citiesList);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("3014728", "Grenoble");
+        editor.putString("2996944", "Lyon");
+        editor.commit();
+
+
         Intent intent = getIntent();
         String value = intent.getStringExtra("userLogin");
 
@@ -64,7 +81,52 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                //Called when a drawer's position changes.
+                ActionBar ab = getSupportActionBar(); // TODO utiliser cette merde
+                /*if (slideOffset != 0 && drawerView..getNavigationMode() == ActionBar.NAVIGATION_MODE_TABS) {
+                    NavigationView nv= (NavigationView) findViewById(R.id.nav_view);
+                    Menu menu=nv.getMenu();
+
+
+
+                    Map<String, String> map = (Map<String, String>) prefs.getAll();
+                    for (Map.Entry<String, String> entry : map.entrySet()) {
+                        System.out.println(entry.getKey() + "/" + entry.getValue());
+
+                        MenuItem city = menu.add(Menu.NONE, Integer.parseInt(entry.getKey()), Menu.NONE, entry.getValue());
+
+                        city.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                cityId = "" + item.getItemId();
+                                updateForecasts();
+                                mDrawerLayout.closeDrawers();
+                                return true;
+                            }
+                        });
+                    }
+
+                    MenuItem lyon = menu.add(Menu.NONE, 2996944, Menu.NONE, "Lyon");
+                    MenuItem grenoble = menu.add(Menu.NONE, 3014728, Menu.NONE, "Grenoble");
+                    lyon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            cityId = "" + item.getItemId();
+                            updateForecasts();
+                            mDrawerLayout.closeDrawers();
+                            return true;
+                        }
+                    });
+
+                    grenoble.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            cityId = "" + item.getItemId();
+                            updateForecasts();
+                            mDrawerLayout.closeDrawers();
+                            return true;
+                        }
+                    });
+                }*/
             }
 
             @Override
@@ -72,27 +134,24 @@ public class MainActivity extends AppCompatActivity {
 
                 NavigationView nv= (NavigationView) findViewById(R.id.nav_view);
                 Menu menu=nv.getMenu();
-                MenuItem lyon = menu.add(Menu.NONE, 2996944, Menu.NONE, "Lyon");
-                MenuItem grenoble = menu.add(Menu.NONE, 3014728, Menu.NONE, "Grenoble");
-                lyon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        cityId = "" + item.getItemId();
-                        updateForecasts();
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
 
-                grenoble.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        cityId = "" + item.getItemId();
-                        updateForecasts();
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
+                Map<String, String> map = (Map<String, String>) prefs.getAll();
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    System.out.println(entry.getKey() + "/" + entry.getValue());
+
+                    MenuItem city = menu.add(Menu.NONE, Integer.parseInt(entry.getKey()), Menu.NONE, entry.getValue());
+
+                    city.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            cityId = "" + item.getItemId();
+                            updateForecasts();
+                            mDrawerLayout.closeDrawers();
+                            return true;
+                        }
+                    });
+                }
+
 
                 Switch onOffSwitch = (Switch)  findViewById(R.id.app_notify_switch);
                 onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -123,7 +182,8 @@ public class MainActivity extends AppCompatActivity {
 
         updateForecasts();
 
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setRefreshing(false);
+
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
