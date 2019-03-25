@@ -392,12 +392,12 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\mediarouter-v7-28.0.0.aar\\93f353c81ff2cf5c09aa28c03e709216\\res\\drawable-xhdpi-v4\\ic_mr_button_connecting_04_light.png"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_ic_mr_button_connecting_07_light.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\mediarouter-v7-28.0.0.aar\\93f353c81ff2cf5c09aa28c03e709216\\res\\drawable-xhdpi-v4\\ic_mr_button_connecting_07_light.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_activity_chooser_view.xml.flat",
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\7b5a7161628ac5d914f45b0d2f28b31c\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_ic_mr_button_connecting_07_light.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\mediarouter-v7-28.0.0.aar\\93f353c81ff2cf5c09aa28c03e709216\\res\\drawable-xhdpi-v4\\ic_mr_button_connecting_07_light.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
@@ -1672,12 +1672,12 @@
         "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-28.0.0.aar\\c8b00ae2eadb20eec1230c2b04a42d58\\res\\drawable-mdpi-v4\\notification_bg_low_normal.9.png"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_ic_media_play_light.png.flat",
-        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\mediarouter-v7-28.0.0.aar\\93f353c81ff2cf5c09aa28c03e709216\\res\\drawable-xxhdpi-v4\\ic_media_play_light.png"
-    },
-    {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_location_black_24dp.png.flat",
         "source": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\generated\\res\\pngs\\debug\\drawable-mdpi\\ic_location_black_24dp.png"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_ic_media_play_light.png.flat",
+        "source": "C:\\Users\\Michel\\.gradle\\caches\\transforms-1\\files-1.1\\mediarouter-v7-28.0.0.aar\\93f353c81ff2cf5c09aa28c03e709216\\res\\drawable-xxhdpi-v4\\ic_media_play_light.png"
     },
     {
         "merged": "D:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_list_divider_material.xml.flat",

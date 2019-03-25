@@ -15,13 +15,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,11 +34,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.opencsv.CSVReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private String cityId = "3014728";
     private String currCity = "";
     private SharedPreferences prefs;
+    private List<String[]> cities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.slide_menu);
         setSupportActionBar(toolbar);
 
+        CSVReader reader = null;
+        try {
+            //String csvfileString = this.getApplicationInfo().dataDir + File.separatorChar + "assets/";
+            final InputStream in = getAssets().open( "city.list.csv" );
+            reader = new CSVReader(new InputStreamReader(in));
+            cities = reader.readAll();
+            Log.d("Cities found :", "" + cities.size());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
 
