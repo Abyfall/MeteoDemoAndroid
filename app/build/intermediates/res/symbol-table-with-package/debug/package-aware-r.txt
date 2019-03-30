@@ -1211,6 +1211,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_none_24dp
+drawable ic_search_black_24dp
 drawable ic_settings_black_24dp
 drawable ic_vol_type_speaker_dark
 drawable ic_vol_type_speaker_group_dark
@@ -1288,6 +1289,7 @@ id afternoon_weather
 id alertTitle
 id all
 id always
+id app_bar_search
 id app_notify_switch
 id async
 id auto
@@ -1429,7 +1431,6 @@ id mr_volume_slider
 id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
 id multiply
-id nav_add_city
 id nav_settings
 id nav_view
 id navigation_header_container
@@ -1604,6 +1605,7 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
+layout drawer_content
 layout fragment_item
 layout menu_switch
 layout mr_cast_dialog
@@ -1640,6 +1642,7 @@ layout notification_template_part_time
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
+layout suggestion
 layout support_simple_spinner_dropdown_item
 menu drawer_menu
 mipmap ic_launcher
@@ -1735,6 +1738,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string search_city
 string search_menu_title
 string settings
 string status_bar_notification_info_overflow

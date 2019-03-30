@@ -1,8 +1,10 @@
 package com.chretimi.meteo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,16 +15,22 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SearchView;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -40,9 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -120,13 +126,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("RestrictedApi")
             @Override
             public void onDrawerOpened(View drawerView) {
+
 
                 NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
                 Menu menu = nv.getMenu();
                 menu.clear(); //clear old inflated items.
                 nv.inflateMenu(R.menu.drawer_menu); //inflate new items.
+
+                String[] COUNTRIES = new String[] { "Belgium",
+                        "France", "France_", "Italy", "Germany", "Spain" };
 
                 // TODO BETTER TEST
                 Switch onOffSwitch = (Switch) findViewById(R.id.app_notify_switch);
@@ -156,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         Log.d("ALEDD", "Click location");
+
+                        SearchView searchView = (SearchView) findViewById(R.id.app_bar_search);
+                        Log.d("QUERY ", searchView.getQuery().toString());
                         final LocationListener mLocationListener = new LocationListener() {
                             @Override
                             public void onLocationChanged(final Location location) {
@@ -203,6 +217,48 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 }
+
+                SearchView searchView = (SearchView) findViewById(R.id.app_bar_search);
+                //ArrayAdapter<String> adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, COUNTRIES, new String[] {"test"},  new int[] {R.id.editTextTest}, 0x00000002);
+
+                /*int id = searchView.getContext()
+                        .getResources()
+                        .getIdentifier("android:id/search_src_text", null, null);
+                Log.d("id search_src_text", "" + id);*/
+                SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);;
+                // TODO PK C'EST NULL JPP
+                SearchManager searchManager =
+                        (SearchManager) getSystemService(SEARCH_SERVICE);
+                searchView.setSearchableInfo(
+                        searchManager.getSearchableInfo(getComponentName()));
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.suggestion, COUNTRIES);
+
+                // jsonarraylist is static string array
+
+                searchAutoComplete.setAdapter(adapter);
+                searchAutoComplete.setThreshold(1);
+
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        Log.d("Typed", s);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        Log.d("Typed", s);
+                        return false;
+                    }});
+                searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // Your code for onitemclick
+                    }
+                });
+
             }
 
             @Override
@@ -227,6 +283,16 @@ public class MainActivity extends AppCompatActivity {
                 pullToRefresh.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        // Configure the search info and add any event listeners
+        Log.d("onCreateOptionsMenu", "Fired");
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void setRecurringAlarm(Context context) {

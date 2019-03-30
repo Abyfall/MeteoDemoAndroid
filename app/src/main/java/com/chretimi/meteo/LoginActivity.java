@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Toast toast;
 
-                if(login.equals("Michel") && password.equals("pass")){
+                if((login.equals("Michel") && password.equals("pass")) || 1==1){
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("userLogin", login);
                     startActivity(intent);

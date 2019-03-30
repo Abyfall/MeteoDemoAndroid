@@ -17,4 +17,5 @@
     <string name="error">Erreur</string>
     <string name="missing_location_permission">Vous devez ajouter les permissions de localisation</string>
     <string name="local_weather">Météo locale</string>
+    <string name="search_city">Ajouter une ville</string>
 </resources>
