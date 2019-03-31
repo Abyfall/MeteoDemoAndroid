@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,16 +20,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -219,25 +215,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 SearchView searchView = (SearchView) findViewById(R.id.app_bar_search);
-                //ArrayAdapter<String> adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, COUNTRIES, new String[] {"test"},  new int[] {R.id.editTextTest}, 0x00000002);
-
-                /*int id = searchView.getContext()
-                        .getResources()
-                        .getIdentifier("android:id/search_src_text", null, null);
-                Log.d("id search_src_text", "" + id);*/
-                SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);;
-                // TODO PK C'EST NULL JPP
-                SearchManager searchManager =
-                        (SearchManager) getSystemService(SEARCH_SERVICE);
-                searchView.setSearchableInfo(
-                        searchManager.getSearchableInfo(getComponentName()));
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.suggestion, COUNTRIES);
-
-                // jsonarraylist is static string array
-
-                searchAutoComplete.setAdapter(adapter);
-                searchAutoComplete.setThreshold(1);
 
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -252,12 +229,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("Typed", s);
                         return false;
                     }});
-                searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // Your code for onitemclick
-                    }
-                });
 
             }
 

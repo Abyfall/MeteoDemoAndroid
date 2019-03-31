@@ -7,19 +7,19 @@
     format="10"
     ir-eligibility="COMPATIBLE"
     plugin-version="3.3.1"
-    timestamp="1553974127248"
+    timestamp="1553975494725"
     token="7381406377607345048"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="289" />
+        duration="312" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="52" />
+        duration="155" />
     <task
         name="verifier"
         duration="38" />
@@ -84,7 +84,7 @@
     <build
         build-mode="COLD"
         ir-eligibility="COMPATIBLE"
-        timestamp="1553974127248"
+        timestamp="1553975494725"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="D:\AndroidStudioProjects\Meteo\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
