@@ -158,14 +158,13 @@ public class MainActivity extends AppCompatActivity {
                 final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
                 MenuItem locationButton = (MenuItem) menu.findItem(R.id.local_weather);
+                MenuItem addCityButton = (MenuItem) menu.findItem(R.id.add_city);
 
                 locationButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         Log.d("ALEDD", "Click location");
 
-                        SearchView searchView = (SearchView) findViewById(R.id.app_bar_search);
-                        Log.d("QUERY ", searchView.getQuery().toString());
                         final LocationListener mLocationListener = new LocationListener() {
                             @Override
                             public void onLocationChanged(final Location location) {
@@ -195,6 +194,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                addCityButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Log.d("Je vais", "Changer de vue");
+                        Intent intent = new Intent(MainActivity.this, AddCity.class);
+                        startActivity(intent);
+                        return false;
+                    }
+                });
+
                 Map<String, String> map = (Map<String, String>) prefs.getAll();
                 for (Map.Entry<String, String> entry : map.entrySet()) {
                     System.out.println(entry.getKey() + "/" + entry.getValue());
@@ -213,22 +222,6 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 }
-
-                SearchView searchView = (SearchView) findViewById(R.id.app_bar_search);
-
-
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String s) {
-                        Log.d("Typed", s);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String s) {
-                        Log.d("Typed", s);
-                        return false;
-                    }});
 
             }
 
@@ -254,16 +247,6 @@ public class MainActivity extends AppCompatActivity {
                 pullToRefresh.setRefreshing(false);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.drawer_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        // Configure the search info and add any event listeners
-        Log.d("onCreateOptionsMenu", "Fired");
-        return super.onCreateOptionsMenu(menu);
     }
 
     private void setRecurringAlarm(Context context) {

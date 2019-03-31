@@ -1283,16 +1283,17 @@ id action_text
 id actions
 id activity_chooser_view_content
 id add
+id add_city
 id afternoon
 id afternoon_temp
 id afternoon_weather
 id alertTitle
 id all
 id always
-id app_bar_search
 id app_notify_switch
 id async
 id auto
+id autoCompleteTextView
 id barrier
 id beginning
 id blocking
@@ -1510,6 +1511,7 @@ id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
+id textView
 id text_input_password_toggle
 id textinput_counter
 id textinput_error
@@ -1589,6 +1591,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_add_city
 layout activity_login
 layout activity_main
 layout design_bottom_navigation_item
