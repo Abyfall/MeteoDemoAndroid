@@ -18,4 +18,7 @@
     <string name="missing_location_permission">Vous devez ajouter les permissions de localisation</string>
     <string name="local_weather">Météo locale</string>
     <string name="search_city">Ajouter une ville</string>
+    <string name="add_this_city">Ajouter la ville</string>
+    <string name="type_city_name">Veuillez entrer le nom de la ville à ajouter</string>
+    <string name="city_hint">Chicago, US</string>
 </resources>

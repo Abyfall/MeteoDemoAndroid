@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     private String cityId = "3014728";
     private String currCity = "";
     private SharedPreferences prefs;
-    private List<String[]> cities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,37 +76,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.slide_menu);
         setSupportActionBar(toolbar);
 
-        CSVReader reader = null;
-        try {
-            //String csvfileString = this.getApplicationInfo().dataDir + File.separatorChar + "assets/";
-            final InputStream in = getAssets().open( "city.list.csv" );
-            reader = new CSVReader(new InputStreamReader(in));
-            cities = reader.readAll();
-            Log.d("Cities found :", "" + cities.size());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
 
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
 
-
-        ArrayList<String> citiesList = new ArrayList<String>();
-        citiesList.add("Lyon");
-        citiesList.add("Grenoble");
-
-
-        Set<String> set = new HashSet<String>();
-
-        set.addAll(citiesList);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("3014728", "Grenoble");
-        editor.putString("2996944", "Lyon");
-        editor.commit();
-
 
         Intent intent = getIntent();
         String value = intent.getStringExtra("userLogin");
@@ -131,9 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 Menu menu = nv.getMenu();
                 menu.clear(); //clear old inflated items.
                 nv.inflateMenu(R.menu.drawer_menu); //inflate new items.
-
-                String[] COUNTRIES = new String[] { "Belgium",
-                        "France", "France_", "Italy", "Germany", "Spain" };
 
                 // TODO BETTER TEST
                 Switch onOffSwitch = (Switch) findViewById(R.id.app_notify_switch);
@@ -199,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         Log.d("Je vais", "Changer de vue");
                         Intent intent = new Intent(MainActivity.this, AddCity.class);
-                        startActivity(intent);
+                        startActivityForResult(intent, 1);
                         return false;
                     }
                 });
@@ -247,6 +217,28 @@ public class MainActivity extends AppCompatActivity {
                 pullToRefresh.setRefreshing(false);
             }
         });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                String city_id = data.getStringExtra("city_id");
+                String city_name = data.getStringExtra("city_name");
+                String city_country = data.getStringExtra("city_country");
+
+                prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(city_id, city_name + ", " + city_country);
+                editor.commit();
+                cityId = city_id;
+                updateForecastsCity();
+                mDrawerLayout.closeDrawers();
+            }
+        }
     }
 
     private void setRecurringAlarm(Context context) {

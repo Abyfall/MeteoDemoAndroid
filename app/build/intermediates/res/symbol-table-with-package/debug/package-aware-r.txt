@@ -1308,6 +1308,7 @@ id center_vertical
 id chains
 id checkbox
 id chronometer
+id cityLabel
 id clip_horizontal
 id clip_vertical
 id collapseActionView
@@ -1532,6 +1533,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
+id validate_city
 id view_offset_helper
 id visible
 id volume_item_container
@@ -1594,6 +1596,7 @@ layout abc_tooltip
 layout activity_add_city
 layout activity_login
 layout activity_main
+layout city_auto
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar
@@ -1690,6 +1693,7 @@ string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string addCity
+string add_this_city
 string afternoon
 string app_name
 string appbar_scrolling_view_behavior
@@ -1698,6 +1702,7 @@ string channel_description
 string channel_name
 string character_counter_content_description
 string character_counter_pattern
+string city_hint
 string connect
 string connected_as
 string connection_impossible
@@ -1746,6 +1751,7 @@ string search_menu_title
 string settings
 string status_bar_notification_info_overflow
 string title_activity_main
+string type_city_name
 string weather
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
