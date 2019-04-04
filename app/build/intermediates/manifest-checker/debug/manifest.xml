@@ -22,10 +22,6 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.chretimi.meteo.AddCity"
-            android:parentActivityName="com.chretimi.meteo.MainActivity" />
-
         <receiver android:name="com.chretimi.meteo.AlarmReceiver" />
 
         <activity

@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String login;
-    String password;
+    private String login;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

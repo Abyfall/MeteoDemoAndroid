@@ -1,4 +1,4 @@
-#Wed Apr 03 16:20:44 CEST 2019
+#Thu Apr 04 01:48:22 CEST 2019
 base.0=D\:\\AndroidStudioProjects\\Meteo\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\9
 path.0=classes.dex
 renamed.0=classes.dex

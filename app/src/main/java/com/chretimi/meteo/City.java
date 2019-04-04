@@ -3,9 +3,9 @@ package com.chretimi.meteo;
 
 public class City {
 
-    private String id;
-    private String name;
-    private String country;
+    private final String id;
+    private final String name;
+    private final String country;
 
     public City(String name, String country, String id){
         this.id = id;

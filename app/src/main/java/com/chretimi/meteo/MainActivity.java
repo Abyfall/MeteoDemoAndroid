@@ -1,7 +1,6 @@
 package com.chretimi.meteo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,10 +10,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +22,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -44,7 +46,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,10 +53,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
     private String currCity = "";
     private SharedPreferences prefs;
 
+    private SearchView.SearchAutoComplete globSearchView;
+    private City citySelected;
+    private CityAdapter customAdapter;
+
+    private AsyncTask<String, Integer, ArrayList<City>> cityFinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,16 +83,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.slide_menu);
         setSupportActionBar(toolbar);
 
+        cityFinder =  new LoadCitiesTask().execute();
+
         prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
 
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
 
-        SharedPreferences.Editor editor = prefs.edit();
-
-        Intent intent = getIntent();
-        String value = intent.getStringExtra("userLogin");
-
-        final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
 
 
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -95,103 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            @SuppressLint("RestrictedApi")
             @Override
             public void onDrawerOpened(View drawerView) {
-
-
-                NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
-                Menu menu = nv.getMenu();
-                menu.clear(); //clear old inflated items.
-                nv.inflateMenu(R.menu.drawer_menu); //inflate new items.
-
-                // TODO BETTER TEST
-                Switch onOffSwitch = (Switch) findViewById(R.id.app_notify_switch);
-                onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        Log.i("Switch State=", "" + isChecked);
-                        if (isChecked) {
-                            Context context = getApplicationContext();
-                            setRecurringAlarm(context);
-                            Log.i("RecurringAlarm ", "set");
-                        } else {
-                            Context context = getApplicationContext();
-                            cancelRecurringAlarm(context);
-                            Log.i("RecurringAlarm ", "removed");
-                        }
-                    }
-
-                });
-
-                final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-                MenuItem locationButton = (MenuItem) menu.findItem(R.id.local_weather);
-                MenuItem addCityButton = (MenuItem) menu.findItem(R.id.add_city);
-
-                locationButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Log.d("ALEDD", "Click location");
-
-                        final LocationListener mLocationListener = new LocationListener() {
-                            @Override
-                            public void onLocationChanged(final Location location) {
-                                Log.i("Location fixed", location.toString());
-                                updateForecastsLocation(location);
-                                mDrawerLayout.closeDrawers();
-                            }
-
-                            @Override
-                            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                            }
-
-                            @Override
-                            public void onProviderEnabled(String provider) {
-
-                            }
-
-                            @Override
-                            public void onProviderDisabled(String provider) {
-
-                            }
-                        };
-
-                        requestLocationUpdate(mLocationListener);
-                        return true;
-                    }
-                });
-
-                addCityButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Log.d("Je vais", "Changer de vue");
-                        Intent intent = new Intent(MainActivity.this, AddCity.class);
-                        startActivityForResult(intent, 1);
-                        return false;
-                    }
-                });
-
-                Map<String, String> map = (Map<String, String>) prefs.getAll();
-                for (Map.Entry<String, String> entry : map.entrySet()) {
-                    System.out.println(entry.getKey() + "/" + entry.getValue());
-
-                    if (menu.findItem(Integer.parseInt(entry.getKey())) == null) {
-                        MenuItem city = menu.add(Menu.NONE, Integer.parseInt(entry.getKey()), Menu.NONE, entry.getValue());
-
-                        city.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                cityId = "" + item.getItemId();
-                                updateForecastsCity();
-                                mDrawerLayout.closeDrawers();
-                                return true;
-                            }
-                        });
-                    }
-                }
 
             }
 
@@ -202,7 +111,139 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerStateChanged(int newState) {
-                // Called when the drawer motion state changes. The new state will be one of STATE_IDLE, STATE_DRAGGING or STATE_SETTLING.
+                {
+                    if (newState == DrawerLayout.STATE_SETTLING && !mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+
+                        NavigationView nv = (NavigationView) findViewById(R.id.nav_view);
+                        Menu menu = nv.getMenu();
+                        menu.clear(); //clear old inflated items.
+                        nv.inflateMenu(R.menu.drawer_menu); //inflate new items.
+
+                        // TODO BETTER TEST
+                        Switch onOffSwitch = (Switch) findViewById(R.id.app_notify_switch);
+                        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                            @Override
+                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                Log.i("Switch State=", "" + isChecked);
+                                if (isChecked) {
+                                    Context context = getApplicationContext();
+                                    setRecurringAlarm(context);
+                                    Log.i("RecurringAlarm ", "set");
+                                } else {
+                                    Context context = getApplicationContext();
+                                    cancelRecurringAlarm(context);
+                                    Log.i("RecurringAlarm ", "removed");
+                                }
+                            }
+
+                        });
+
+                        final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                        MenuItem locationButton = (MenuItem) menu.findItem(R.id.local_weather);
+                        MenuItem searchItem = menu.findItem(R.id.action_search);
+                        SearchView searchView =
+                                (SearchView) searchItem.getActionView();
+
+                        globSearchView = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+                        // Configure the search info and add any event listeners...
+                        try {
+                            cityFinder.get();
+                            if(globSearchView != null) {
+                                globSearchView.setAdapter(customAdapter);//setting the adapter data into the AutoCompleteTextView
+                                globSearchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        citySelected = customAdapter.getItem(position);
+                                        Log.d("pos", citySelected.getName());
+                                        Log.d("id", citySelected.getId());
+                                        prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
+
+                                        SharedPreferences.Editor editor = prefs.edit();
+                                        editor.putString(citySelected.getId(), citySelected.getName() + ", " + citySelected.getCountry());
+                                        editor.commit();
+                                        cityId = citySelected.getId();
+                                        updateForecastsCity();
+                                        mDrawerLayout.closeDrawers();
+                                    }
+                                });
+
+                                /**
+                                 * Unset the var whenever the user types. Validation will
+                                 * then fail. This is how we enforce selecting from the list.
+                                 */
+                                globSearchView.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        citySelected = null;
+                                    }
+                                    @Override
+                                    public void afterTextChanged(Editable s) {}
+                                });
+                            }
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        locationButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Log.d("ALEDD", "Click location");
+
+                                final LocationListener mLocationListener = new LocationListener() {
+                                    @Override
+                                    public void onLocationChanged(final Location location) {
+                                        Log.i("Location fixed", location.toString());
+                                        updateForecastsLocation(location);
+                                        mDrawerLayout.closeDrawers();
+                                    }
+
+                                    @Override
+                                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                                    }
+
+                                    @Override
+                                    public void onProviderEnabled(String provider) {
+
+                                    }
+
+                                    @Override
+                                    public void onProviderDisabled(String provider) {
+
+                                    }
+                                };
+
+                                requestLocationUpdate(mLocationListener);
+                                return true;
+                            }
+                        });
+
+                        Map<String, String> map = (Map<String, String>) prefs.getAll();
+                        for (Map.Entry<String, String> entry : map.entrySet()) {
+                            System.out.println(entry.getKey() + "/" + entry.getValue());
+
+                            if (menu.findItem(Integer.parseInt(entry.getKey())) == null) {
+                                MenuItem city = menu.add(Menu.NONE, Integer.parseInt(entry.getKey()), Menu.NONE, entry.getValue());
+                                city.setIcon(R.drawable.ic_remove_black_24dp); // add icon with drawable resource
+                                city.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        cityId = "" + item.getItemId();
+                                        updateForecastsCity();
+                                        mDrawerLayout.closeDrawers();
+                                        return true;
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
             }
         });
 
@@ -217,28 +258,6 @@ public class MainActivity extends AppCompatActivity {
                 pullToRefresh.setRefreshing(false);
             }
         });
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
-                final DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-                String city_id = data.getStringExtra("city_id");
-                String city_name = data.getStringExtra("city_name");
-                String city_country = data.getStringExtra("city_country");
-
-                prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
-
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(city_id, city_name + ", " + city_country);
-                editor.commit();
-                cityId = city_id;
-                updateForecastsCity();
-                mDrawerLayout.closeDrawers();
-            }
-        }
     }
 
     private void setRecurringAlarm(Context context) {
@@ -334,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void updateForecasts(String query) { // TODO async task
+    private void updateForecasts(String url) { // TODO async task
 
 
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
@@ -348,7 +367,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = query;
 
         final List<Forecast> forecasts = new ArrayList<>();
 
@@ -425,6 +443,40 @@ public class MainActivity extends AppCompatActivity {
             locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationUpdateListener, null);
             locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationUpdateListener, null);
         }
+    }
+
+
+    private class LoadCitiesTask extends AsyncTask<String, Integer, ArrayList<City>> {
+        protected ArrayList<City> doInBackground(String... str) {
+            final InputStream in;
+            ArrayList<City> cities = new ArrayList<>();
+            try {
+                in = getAssets().open( "city.list.csv" );
+                CSVReader csvReader = new CSVReader(new InputStreamReader(in), ';');
+                List<String[]> rawCities = new ArrayList<>();
+                rawCities = csvReader.readAll();
+                List<String> citiesName = new LinkedList<>();
+                for(String[] city : rawCities){
+                    cities.add(new City(city[0],city[1],city[2]));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Log.d("Found", cities.size() + "cities");
+            return cities;
+        }
+
+
+        @Override
+        protected void onPostExecute(ArrayList<City> result) {
+            setDataCreateAdapter(result);
+        }
+    }
+
+    private void setDataCreateAdapter(ArrayList<City> cities) {
+        customAdapter = new CityAdapter(MainActivity.this, android.R.layout.select_dialog_item, cities);
+        Log.d("Adapter", "created");
     }
 
 }

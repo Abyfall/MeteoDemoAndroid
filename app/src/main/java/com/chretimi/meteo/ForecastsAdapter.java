@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +13,7 @@ import java.util.List;
 public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsAdapter.ViewHolder>{
 
     // Store a member variable for the contacts
-    private List<ForecastDay> mForecast;
+    private final List<ForecastDay> mForecast;
 
     // Pass in the contact array into the constructor
     public ForecastsAdapter(List<ForecastDay> contacts) {
@@ -26,15 +25,15 @@ public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView nameTextView;
+        public final TextView nameTextView;
 
-        public ImageView morningForecastImageView;
-        public ImageView afternoonForecastImageView;
-        public ImageView eveningForecastImageView;
+        public final ImageView morningForecastImageView;
+        public final ImageView afternoonForecastImageView;
+        public final ImageView eveningForecastImageView;
 
-        public TextView morningTemp;
-        public TextView afternoonTemp;
-        public TextView eveningTemp;
+        public final TextView morningTemp;
+        public final TextView afternoonTemp;
+        public final TextView eveningTemp;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -66,8 +65,7 @@ public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsAdapter.View
         View contactView = inflater.inflate(R.layout.fragment_item, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(contactView);
-        return viewHolder;
+        return new ViewHolder(contactView);
     }
 
     // Involves populating data into the item through holder

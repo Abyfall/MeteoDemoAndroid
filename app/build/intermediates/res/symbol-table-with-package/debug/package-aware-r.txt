@@ -1279,11 +1279,11 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
+id action_search
 id action_text
 id actions
 id activity_chooser_view_content
 id add
-id add_city
 id afternoon
 id afternoon_temp
 id afternoon_weather
@@ -1293,7 +1293,6 @@ id always
 id app_notify_switch
 id async
 id auto
-id autoCompleteTextView
 id barrier
 id beginning
 id blocking
@@ -1512,7 +1511,6 @@ id text2
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
-id textView
 id text_input_password_toggle
 id textinput_counter
 id textinput_error
@@ -1533,7 +1531,6 @@ id uniform
 id unlabeled
 id up
 id useLogo
-id validate_city
 id view_offset_helper
 id visible
 id volume_item_container
@@ -1593,7 +1590,6 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
-layout activity_add_city
 layout activity_login
 layout activity_main
 layout city_auto
@@ -1648,7 +1644,6 @@ layout notification_template_part_time
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
-layout suggestion
 layout support_simple_spinner_dropdown_item
 menu drawer_menu
 mipmap ic_launcher

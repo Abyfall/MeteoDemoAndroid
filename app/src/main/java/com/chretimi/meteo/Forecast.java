@@ -1,28 +1,20 @@
 package com.chretimi.meteo;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 class Forecast {
 
-    private int hour;
-    String date;
-    int forecast;
-    Date rawDate;
-    static List<Forecast> forecasts = new ArrayList<>();
-    private int temp;
+    private final int hour;
+    private final String date;
+    private final int forecast;
+    private final Date rawDate;
+    static final List<Forecast> forecasts = new ArrayList<>();
+    private final int temp;
 
     public Forecast(Date date, int forecast, int temp){
 
@@ -40,10 +32,6 @@ class Forecast {
 
     public String getDate(){
         return date;
-    }
-
-    public static void updateData(){
-
     }
 
     public static List<Forecast> getForecasts(){
