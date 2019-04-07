@@ -2,15 +2,16 @@ package com.chretimi.meteo;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Filter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CityAdapter extends ArrayAdapter<City> {
@@ -72,6 +73,11 @@ public class CityAdapter extends ArrayAdapter<City> {
         return view;
     }
 
+    public void updateCities(ArrayList<City> newCities) {
+        cities.clear();
+        cities.addAll(newCities);
+        this.notifyDataSetChanged();
+    }
 
     @Override
     public Filter getFilter() {

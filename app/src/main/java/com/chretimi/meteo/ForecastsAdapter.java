@@ -62,7 +62,7 @@ public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsAdapter.View
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View contactView = inflater.inflate(R.layout.fragment_item, parent, false);
+        View contactView = inflater.inflate(R.layout.forecast_fragment_item, parent, false);
 
         // Return a new holder instance
         return new ViewHolder(contactView);
@@ -93,5 +93,11 @@ public class ForecastsAdapter extends RecyclerView.Adapter<ForecastsAdapter.View
     @Override
     public int getItemCount() {
         return mForecast.size();
+    }
+
+    public void updateForecastDays(List<ForecastDay> newForecast) {
+        mForecast.clear();
+        mForecast.addAll(newForecast);
+        this.notifyDataSetChanged();
     }
 }
