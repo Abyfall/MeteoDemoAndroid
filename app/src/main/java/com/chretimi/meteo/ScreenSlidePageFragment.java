@@ -39,7 +39,7 @@ public class ScreenSlidePageFragment extends Fragment {
         adapter = new ForecastsAdapter(currForecasts);
 
         forecastFinder = OWMForecastFinder.getInstance();
-        forecastFinder.addCustomEventListener(Integer.parseInt(id), new OWMForecastFinder.OnCustomEventListener(){
+        forecastFinder.addForecastEventListener(Integer.parseInt(id), new OWMForecastFinder.OnForecastEventListener(){
             public void onEvent(String cityId, List<ForecastDay> OWMForecast){
                 if(cityId.equals(id)){
                     Log.d("Frag "+id+" got", cityId + " it's me :)");

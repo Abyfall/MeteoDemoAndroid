@@ -1,14 +1,22 @@
 package com.chretimi.meteo;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -29,7 +38,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +49,10 @@ public class MainActivity extends AppCompatActivity {
     String pageData[];          //Stores the text to swipe.
     LayoutInflater inflater;    //Used to create individual pages
     ViewPager vp;               //Reference to class to swipe views
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
+
+
+    private static final int FINE_COARSE_LOCATION_REQUEST = 48674;
+
     private SharedPreferences prefs;
 
     private ArrayList<String[]> favoriteCities = new ArrayList<>();
@@ -52,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
     private AsyncTask<String, Integer, ArrayList<City>> cityFinder;
 
     private City citySelected;
+
+    private ScreenSlidePagerAdapter slideAdapter;
+
+    private FloatingActionButton favoriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +83,94 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
 
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("3021435", "Die" + ", " + "FR");
-        editor.putString("3014728", "Grenoble" + ", " + "FR");
-        editor.putString("2996944", "Lyon" + ", " + "FR");
-        editor.commit();
+        Map<String, String> map = (Map<String, String>) prefs.getAll();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if(entry.getValue() instanceof String){
+                favoriteCities.add(new String[]{ entry.getKey(), entry.getValue()});
+            }
+        }
+
+        favoriteButton = findViewById(R.id.favorite_floating);
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentItem = vp.getCurrentItem();
+                Fragment frag = slideAdapter.getItem(currentItem);
+                String id = frag.getArguments().getString("id");
+                String city = frag.getArguments().getString("city");
+                Log.d("Favorite", id + ":" + city + ", " + vp.getCurrentItem());
+                boolean isFavorite = false;
+                if(prefs.contains(id+"b")){
+                    isFavorite = prefs.getBoolean(id+"b", false);
+                }
+                Log.d("City", city + " favorite ?" + isFavorite);
+                isFavorite = isFavorite ? false:true; // Inverse
+                SharedPreferences.Editor editor = prefs.edit();
+                if(isFavorite){
+                    favoriteButton.setImageResource(R.drawable.ic_is_favorite_lightgrey_24dp);
+                    editor.putString(id, city);
+                    editor.putBoolean(id+"b", true);
+                }else{
+                    favoriteButton.setImageResource(R.drawable.ic_can_favorite_lightgrey_24dp);
+                    editor.remove(id+"b");
+                    editor.remove(id);
+                    removeFarovriteCity(id);
+                    slideAdapter.notifyDataSetChanged();
+                }
+                editor.apply();
+            }
+        });
 
         //set the adapter that will create the individual pages
-        vp.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
+        slideAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        vp.setAdapter(slideAdapter);
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                Fragment frag = slideAdapter.getItem(position);
+                String id = frag.getArguments().getString("id");
+                boolean isFavorite = false;
+                if(prefs.contains(id+"b")){
+                    isFavorite = prefs.getBoolean(id+"b", false);
+                }
+                if(isFavorite){
+                    favoriteButton.setImageResource(R.drawable.ic_is_favorite_lightgrey_24dp);
+                }else{
+                    favoriteButton.setImageResource(R.drawable.ic_can_favorite_lightgrey_24dp);
+                }
+            }
+        });
+    }
+
+    private void addCity(City city) {
+        addCity(city.getId(), city.toString());
+    }
+
+    private void addCity(String id, String cityName) {
+        favoriteCities.add(new String[]{ id, cityName});
+    }
+
+    private void addCityToFarovrite(City city) {
+        addCity(city);
+        addCityToFarovrite(city.getId(), city.getName());
+    }
+
+    private void addCityToFarovrite(String id, String cityName) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(id, cityName);
+        editor.putBoolean(id+"b", true);
+        editor.apply();
+    }
+
+    private void removeFarovriteCity(String id) {
+        for(int i = 0; i < favoriteCities.size(); i++){
+            if(favoriteCities.get(i)[0].equals(id)){
+                Object o = favoriteCities.get(i);
+                favoriteCities.remove(o);
+            }
+        }
     }
 
     @Override
@@ -86,9 +182,10 @@ public class MainActivity extends AppCompatActivity {
         customAdapter = new CityAdapter(MainActivity.this, android.R.layout.select_dialog_item, cities);
         Log.d("Adapter", "created");
 
-        MenuItem mSearchItem = menu.findItem(R.id.m_search);
+        final MenuItem mSearchItem = menu.findItem(R.id.m_search);
+        final MenuItem mLocationButton = menu.findItem(R.id.m_locate);
 
-        SearchView searchView =
+        final SearchView searchView =
                 (SearchView) mSearchItem.getActionView();
 
         SearchView.SearchAutoComplete globSearchView = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
@@ -101,12 +198,11 @@ public class MainActivity extends AppCompatActivity {
                     citySelected = customAdapter.getItem(position);
                     Log.d("pos", citySelected.getName());
                     Log.d("id", citySelected.getId());
-                    prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
-
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(citySelected.getId(), citySelected.getName() + ", " + citySelected.getCountry());
-                    editor.commit();
-                    //updateForecastsCity();
+                    addCity(citySelected);
+                    vp.getAdapter().notifyDataSetChanged();
+                    int lastId = vp.getAdapter().getCount() - 1;
+                    mSearchItem.collapseActionView();
+                    vp.setCurrentItem(lastId, true);
                 }
             });
 
@@ -129,6 +225,47 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        mLocationButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                final LocationListener mLocationListener = new LocationListener() {
+                    @Override
+                    public void onLocationChanged(final Location location) {
+                        Log.i("Location fixed", location.toString());
+                        OWMForecastFinder forecastFinder = OWMForecastFinder.getInstance();
+                        forecastFinder.getForecastsLocation(location);
+                        forecastFinder.setLocationForecastEventListener(new OWMForecastFinder.OnLocationForecastEventListener(){
+                            @Override
+                            public void onEvent(String cityId, String cityName, List<ForecastDay> OWMForecast) {
+                                addCity(cityId, cityName);
+                                vp.getAdapter().notifyDataSetChanged();
+                                int lastId = vp.getAdapter().getCount() - 1;
+                                vp.setCurrentItem(lastId, true);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                };
+
+                requestLocationUpdate(mLocationListener);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -139,11 +276,6 @@ public class MainActivity extends AppCompatActivity {
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
-            prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
-            Map<String, String> map = (Map<String, String>) prefs.getAll();
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                favoriteCities.add(new String[]{ entry.getKey(), entry.getValue()});
-            }
         }
 
         @Override
@@ -156,10 +288,21 @@ public class MainActivity extends AppCompatActivity {
             return frag;
         }
 
+        /**
+        public Fragment getItem(Location loc) {
+            Bundle bundle = new Bundle();
+            bundle.putString("lon", Double.toString(loc.getLongitude()));
+            bundle.putString("lat", Double.toString(loc.getLatitude()));
+            ScreenSlidePageFragment frag = new ScreenSlidePageFragment();
+            frag.setArguments(bundle);
+            return frag;
+        }**/
+
         @Override
         public int getCount() {
             return favoriteCities.size();
         }
+
     }
 
     public static Context getAppContext() {
@@ -224,5 +367,19 @@ public class MainActivity extends AppCompatActivity {
             return cities;
         }
 
+    }
+
+    private void requestLocationUpdate(LocationListener locationUpdateListener) {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    FINE_COARSE_LOCATION_REQUEST);
+        }else{
+            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationUpdateListener, null);
+            locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationUpdateListener, null);
+        }
     }
 }

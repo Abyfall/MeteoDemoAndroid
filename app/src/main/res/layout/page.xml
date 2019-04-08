@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -26,6 +26,7 @@
                 tools:context=".ItemFragment"
                 tools:listitem="@layout/forecast_fragment_item" />
 
-        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

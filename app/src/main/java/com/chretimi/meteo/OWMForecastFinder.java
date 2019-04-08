@@ -29,7 +29,9 @@ public class OWMForecastFinder {
 
     private static OWMForecastFinder single_instance=null;
 
-    private Map<Integer, OnCustomEventListener> mListener =new HashMap<>();
+    private Map<Integer, OnForecastEventListener> mListener =new HashMap<>();
+
+    private OnLocationForecastEventListener locListener;
 
     private Map<String, ForecastCache> cachedForecast = new HashMap<String, ForecastCache>();
 
@@ -47,31 +49,34 @@ public class OWMForecastFinder {
     public void getForecastsCityID(String cityId){
         if(!cachedForecast.containsKey(cityId) || cachedForecast.get(cityId).isExpired()){
             String url = "http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&APPID=" + APIKEY + "&units=metric";
-            updateForecasts(url);
+            updateForecasts(url, false);
         }else{
             Log.d("Forecast through cache", cityId);
-            for (OnCustomEventListener notifListener : mListener.values()){
+            for (OnForecastEventListener notifListener : mListener.values()){
                 notifListener.onEvent(cityId, cachedForecast.get(cityId).getForecastDays());
             }
         }
     }
 
+    // TODO cache
     public void getForecastsLocation(Location location){
+
         String lat = Double.toString(location.getLatitude());
         String lon = Double.toString(location.getLongitude());
+
         String url = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&APPID=" + APIKEY + "&units=metric";
-        updateForecasts(url);
+        updateForecasts(url, true);
     }
 
 
-    private void updateForecasts(String url) {
+    private void updateForecasts(String url, boolean usingLoc) {
 
         Log.e("ForecastUpdate called", url);
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(MainActivity.getAppContext());
 
         final List<Forecast> forecasts = new ArrayList<>();
-
+        final boolean locationMode = usingLoc;
         // Request a string response from the provided URL.
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -103,9 +108,13 @@ public class OWMForecastFinder {
                             String currCity = json.getJSONObject("city").getString("name");
                             String cityId = json.getJSONObject("city").getString("id"); // Update au cas où la dernière requêtes vient d'info gps
                             Log.i("Weather", "Got weather for " + cityId + ", " + json.getJSONObject("city").getString("name"));
-                            cachedForecast.put(cityId, new ForecastCache(newForecastsDays));
-                            for (OnCustomEventListener notifListener : mListener.values()){
-                                notifListener.onEvent(cityId, cachedForecast.get(cityId).getForecastDays());
+                            if(locationMode){
+                                locListener.onEvent(cityId, currCity, newForecastsDays);
+                            }else{
+                                cachedForecast.put(cityId, new ForecastCache(newForecastsDays));
+                                for (OnForecastEventListener notifListener : mListener.values()){
+                                    notifListener.onEvent(cityId, cachedForecast.get(cityId).getForecastDays());
+                                }
                             }
 
                         } catch (JSONException e) {
@@ -152,12 +161,19 @@ public class OWMForecastFinder {
         return forecastDays;
     }
 
-    //setting the listener
-    public void addCustomEventListener(int id, OnCustomEventListener eventListener) {
+    public void addForecastEventListener(int id, OnForecastEventListener eventListener) {
         this.mListener.put(id, eventListener);
     }
 
-    public interface OnCustomEventListener{
-        public void onEvent(String cityId, List<ForecastDay> OWMForecast);   //method, which can have parameters
+    public void setLocationForecastEventListener(OnLocationForecastEventListener eventListener) {
+        this.locListener = eventListener;
+    }
+
+    public interface OnForecastEventListener{
+        public void onEvent(String cityId, List<ForecastDay> OWMForecast);
+    }
+
+    public interface OnLocationForecastEventListener{
+        public void onEvent(String cityId, String cityName, List<ForecastDay> OWMForecast);
     }
 }
