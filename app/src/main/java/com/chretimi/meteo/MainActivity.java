@@ -17,10 +17,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -69,11 +74,21 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton favoriteButton;
 
+    private SwipeRefreshLayout pullToRefresh;
+
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         setContentView(R.layout.activity_main);
+
+        drawerLayout = findViewById(R.id.main_drawer);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_lightgrey_24dp);
+
 
         cityFinder =  new LoadCitiesTask().execute();
 
@@ -82,6 +97,15 @@ public class MainActivity extends AppCompatActivity {
         vp=(ViewPager)findViewById(R.id.viewPager);
 
         prefs = getSharedPreferences("cities", Context.MODE_PRIVATE);
+
+
+        pullToRefresh = findViewById(R.id.refresh_layout);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
         Map<String, String> map = (Map<String, String>) prefs.getAll();
         for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -144,6 +168,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     private void addCity(City city) {
         addCity(city.getId(), city.toString());
     }
@@ -199,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("pos", citySelected.getName());
                     Log.d("id", citySelected.getId());
                     addCity(citySelected);
+                    setRefreshing(true);
                     vp.getAdapter().notifyDataSetChanged();
                     int lastId = vp.getAdapter().getCount() - 1;
                     mSearchItem.collapseActionView();
@@ -229,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
         mLocationButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                setRefreshing(true);
                 final LocationListener mLocationListener = new LocationListener() {
                     @Override
                     public void onLocationChanged(final Location location) {
@@ -267,6 +304,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    public void setRefreshing(boolean b) {
+        if(this.pullToRefresh != null){
+            this.pullToRefresh.setRefreshing(b);
+        }
     }
 
     /**

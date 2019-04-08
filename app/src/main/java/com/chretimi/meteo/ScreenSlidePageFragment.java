@@ -3,6 +3,7 @@ package com.chretimi.meteo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,6 +46,7 @@ public class ScreenSlidePageFragment extends Fragment {
                     Log.d("Frag "+id+" got", cityId + " it's me :)");
                     currForecasts = OWMForecast;
                     updateDisplay();
+                    ((MainActivity) getActivity()).setRefreshing(false);
                 }else{
                     Log.d("Frag "+id+" got", cityId + " skipping");
                 }
