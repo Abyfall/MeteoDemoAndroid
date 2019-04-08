@@ -47,6 +47,7 @@ public class CityAdapter extends ArrayAdapter<City> {
         }
     };
     private ArrayList<City> cities;
+
     private int viewResourceId;
 
     public CityAdapter(Context context, int viewResourceId, ArrayList<City> items) {

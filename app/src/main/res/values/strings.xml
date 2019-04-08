@@ -21,4 +21,7 @@
     <string name="add_this_city">Ajouter la ville</string>
     <string name="type_city_name">Veuillez entrer le nom de la ville à ajouter</string>
     <string name="city_hint">Chicago, US</string>
+    <string name="city">Ville</string>
+    <string name="locate_me">Localiser</string>
+    <string name="json_error">Les données météos sont corrompues</string>
 </resources>

@@ -1,8 +1,11 @@
 package com.chretimi.meteo;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.location.Location;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -82,7 +85,7 @@ public class OWMForecastFinder {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response){
 
                         try {
                             JSONObject json = new JSONObject(response);
@@ -90,6 +93,7 @@ public class OWMForecastFinder {
 
                             if (!cod.equals("200")) {
                                 Log.e("Http error : ", cod);
+                                toastErrorLog(getString(R.string.connection_impossible));
                                 return;
                             }
 
@@ -118,17 +122,24 @@ public class OWMForecastFinder {
                             }
 
                         } catch (JSONException e) {
+                            toastErrorLog(getString(R.string.json_error));
                             Log.e("ParsingForecast", "JSONException", e);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(VolleyError error){
+                toastErrorLog(getString(R.string.connection_impossible));
                 Log.e("ConnexionError", "VolleyError", error);
             }
         });
         queue.add(stringRequest);
     }
+
+    private String getString(int resId) {
+        return MainActivity.getAppContext().getString(resId);
+    }
+
 
     /**
      * Group unique forecast as forecastDay (all forecast for a day)
@@ -170,10 +181,17 @@ public class OWMForecastFinder {
     }
 
     public interface OnForecastEventListener{
-        public void onEvent(String cityId, List<ForecastDay> OWMForecast);
+        void onEvent(String cityId, List<ForecastDay> OWMForecast);
     }
 
     public interface OnLocationForecastEventListener{
-        public void onEvent(String cityId, String cityName, List<ForecastDay> OWMForecast);
+        void onEvent(String cityId, String cityName, List<ForecastDay> OWMForecast);
+    }
+
+    private void toastErrorLog(String error) {
+        Context context = MainActivity.getAppContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, getString(R.string.error) + " : " + error, duration);
+        toast.show();
     }
 }

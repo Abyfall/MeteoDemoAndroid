@@ -51,10 +51,9 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    String pageData[];          //Stores the text to swipe.
-    LayoutInflater inflater;    //Used to create individual pages
-    ViewPager vp;               //Reference to class to swipe views
 
+    LayoutInflater inflater;
+    ViewPager vp;
 
     private static final int FINE_COARSE_LOCATION_REQUEST = 48674;
 
@@ -349,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static Context getAppContext() {
-        return MainActivity.context;
+        return context;
     }
 
     private void setRecurringAlarm(Context context) {
@@ -385,9 +384,9 @@ public class MainActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, getString(R.string.error) + error, duration);
-
         toast.show();
     }
+
     private class LoadCitiesTask extends AsyncTask<String, Integer, ArrayList<City>> {
         protected ArrayList<City> doInBackground(String... str) {
             final InputStream in;
@@ -395,9 +394,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 in = getAssets().open( "city.list.csv" );
                 CSVReader csvReader = new CSVReader(new InputStreamReader(in), ';');
-                List<String[]> rawCities = new ArrayList<>();
+                List<String[]> rawCities;
                 rawCities = csvReader.readAll();
-                List<String> citiesName = new LinkedList<>();
                 for(String[] city : rawCities){
                     cities.add(new City(city[0],city[1],city[2]));
                 }
