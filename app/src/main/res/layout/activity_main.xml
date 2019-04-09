@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main_drawer"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_gradient"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -19,33 +19,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:background="@android:color/transparent">
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/lightGrey"
-                    android:elevation="14dp"
-                    android:theme="@style/ToolbarTheme"
-                    />
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_actionbar"
+                android:elevation="4dp"
+                app:titleTextColor="@color/black"
+                tools:title="lorem ipsum" />
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/content_frame"
-            android:elevation="0dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:elevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/light_blue"
                 android:orientation="vertical">
 
                 <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/refresh_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <android.support.v4.view.ViewPager
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
@@ -68,5 +70,5 @@
     </LinearLayout>
 
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
-    <include layout="@layout/drawer_content"/>
+    <include layout="@layout/drawer_content" />
 </android.support.v4.widget.DrawerLayout>

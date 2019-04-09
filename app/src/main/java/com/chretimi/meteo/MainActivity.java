@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs;
 
     private ArrayList<String[]> favoriteCities = new ArrayList<>();
+    private ArrayList<String[]> displayCities = new ArrayList<>();
 
     private CityAdapter customAdapter;
 
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, String> map = (Map<String, String>) prefs.getAll();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             if(entry.getValue() instanceof String){
-                favoriteCities.add(new String[]{ entry.getKey(), entry.getValue()});
+                displayCities.add(new String[]{ entry.getKey(), entry.getValue()});
             }
         }
 
@@ -153,15 +154,9 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 Fragment frag = slideAdapter.getItem(position);
                 String id = frag.getArguments().getString("id");
-                boolean isFavorite = false;
-                if(prefs.contains(id+"b")){
-                    isFavorite = prefs.getBoolean(id+"b", false);
-                }
-                if(isFavorite){
-                    favoriteButton.setImageResource(R.drawable.ic_is_favorite_lightgrey_24dp);
-                }else{
-                    favoriteButton.setImageResource(R.drawable.ic_can_favorite_lightgrey_24dp);
-                }
+                Log.d("Start refresb", "select " + id);
+                setRefreshing(true);
+                updateFavoriteButton(id);
             }
         });
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -182,6 +177,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void  updateFavoriteButton(String id){
+        boolean isFavorite = false;
+        if(prefs.contains(id+"b")){
+            isFavorite = prefs.getBoolean(id+"b", false);
+        }
+        if(isFavorite){
+            favoriteButton.setImageResource(R.drawable.ic_is_favorite_lightgrey_24dp);
+        }else{
+            favoriteButton.setImageResource(R.drawable.ic_can_favorite_lightgrey_24dp);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -199,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addCity(String id, String cityName) {
-        favoriteCities.add(new String[]{ id, cityName});
+        displayCities.add(new String[]{ id, cityName});
     }
 
     private void addCityToFarovrite(City city) {
@@ -208,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addCityToFarovrite(String id, String cityName) {
+        favoriteCities.add(new String[]{ id, cityName});
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(id, cityName);
         editor.putBoolean(id+"b", true);
@@ -219,6 +226,14 @@ public class MainActivity extends AppCompatActivity {
             if(favoriteCities.get(i)[0].equals(id)){
                 Object o = favoriteCities.get(i);
                 favoriteCities.remove(o);
+            }
+        }
+    }
+    private void removeCity(String id) {
+        for(int i = 0; i < displayCities.size(); i++){
+            if(displayCities.get(i)[0].equals(id)){
+                Object o = displayCities.get(i);
+                displayCities.remove(o);
             }
         }
     }
@@ -345,26 +360,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
-            bundle.putString("id", favoriteCities.get(position)[0]);
-            bundle.putString("city", favoriteCities.get(position)[1]);
+            bundle.putString("id", displayCities.get(position)[0]);
+            bundle.putString("city", displayCities.get(position)[1]);
             ScreenSlidePageFragment frag = new ScreenSlidePageFragment();
             frag.setArguments(bundle);
             return frag;
         }
 
-        /**
-        public Fragment getItem(Location loc) {
-            Bundle bundle = new Bundle();
-            bundle.putString("lon", Double.toString(loc.getLongitude()));
-            bundle.putString("lat", Double.toString(loc.getLatitude()));
-            ScreenSlidePageFragment frag = new ScreenSlidePageFragment();
-            frag.setArguments(bundle);
-            return frag;
-        }**/
-
         @Override
         public int getCount() {
-            return favoriteCities.size();
+            return displayCities.size();
         }
 
     }

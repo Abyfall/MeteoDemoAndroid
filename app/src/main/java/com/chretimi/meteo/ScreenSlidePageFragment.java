@@ -46,8 +46,10 @@ public class ScreenSlidePageFragment extends Fragment {
                     Log.d("Frag "+id+" got", cityId + " it's me :)");
                     currForecasts = OWMForecast;
                     updateDisplay();
-                    if(((MainActivity) getActivity()) != null){
-                        ((MainActivity) getActivity()).setRefreshing(false);
+                    MainActivity mainAc = (MainActivity) getActivity();
+                    if(mainAc != null){
+                        mainAc.setRefreshing(false);
+                        mainAc.updateFavoriteButton(id);
                     }
                 }else{
                     Log.d("Frag "+id+" got", cityId + " skipping");
@@ -95,6 +97,11 @@ public class ScreenSlidePageFragment extends Fragment {
 
         if(actionBar != null){
             actionBar.setTitle(cityName);
+        }
+
+        if(((MainActivity) getActivity()) != null){
+            ((MainActivity) getActivity()).setRefreshing(false);
+            Log.d("Stop refresb", "select " + id);
         }
 
     }
