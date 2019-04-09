@@ -49,7 +49,7 @@ public class ScreenSlidePageFragment extends Fragment {
                     MainActivity mainAc = (MainActivity) getActivity();
                     if(mainAc != null){
                         mainAc.setRefreshing(false);
-                        mainAc.updateFavoriteButton(id);
+                        Log.d("ForecList Stop refresb", "select " + id);
                     }
                 }else{
                     Log.d("Frag "+id+" got", cityId + " skipping");
@@ -99,9 +99,11 @@ public class ScreenSlidePageFragment extends Fragment {
             actionBar.setTitle(cityName);
         }
 
-        if(((MainActivity) getActivity()) != null){
-            ((MainActivity) getActivity()).setRefreshing(false);
-            Log.d("Stop refresb", "select " + id);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.updateFavoriteButton(id);
+        if(mainActivity != null){
+            mainActivity.setRefreshing(false);
         }
 
     }

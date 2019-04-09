@@ -126,21 +126,14 @@ public class MainActivity extends AppCompatActivity {
                 if(prefs.contains(id+"b")){
                     isFavorite = prefs.getBoolean(id+"b", false);
                 }
-                Log.d("City", city + " favorite ?" + isFavorite);
-                isFavorite = isFavorite ? false:true; // Inverse
-                SharedPreferences.Editor editor = prefs.edit();
-                if(isFavorite){
-                    favoriteButton.setImageResource(R.drawable.ic_is_favorite_lightgrey_24dp);
-                    editor.putString(id, city);
-                    editor.putBoolean(id+"b", true);
+                Log.d("City", city + "was favorite ?" + isFavorite + " inversing");
+                boolean isNowFavorite = isFavorite ? false:true; // Inverse
+                if(isNowFavorite){
+                    addCityToFarovrite(id, city);
                 }else{
-                    favoriteButton.setImageResource(R.drawable.ic_can_favorite_lightgrey_24dp);
-                    editor.remove(id+"b");
-                    editor.remove(id);
                     removeFarovriteCity(id);
-                    slideAdapter.notifyDataSetChanged();
                 }
-                editor.apply();
+                updateFavoriteButton(id);
             }
         });
 
@@ -154,9 +147,6 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 Fragment frag = slideAdapter.getItem(position);
                 String id = frag.getArguments().getString("id");
-                Log.d("Start refresb", "select " + id);
-                setRefreshing(true);
-                updateFavoriteButton(id);
             }
         });
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -178,10 +168,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void  updateFavoriteButton(String id){
+        Log.d("Set button favorite for" , id);
         boolean isFavorite = false;
         if(prefs.contains(id+"b")){
             isFavorite = prefs.getBoolean(id+"b", false);
         }
+        Log.d("Pref found favorite" , Boolean.toString(isFavorite));
         if(isFavorite){
             favoriteButton.setImageResource(R.drawable.ic_is_favorite_lightgrey_24dp);
         }else{
@@ -228,6 +220,10 @@ public class MainActivity extends AppCompatActivity {
                 favoriteCities.remove(o);
             }
         }
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(id+"b");
+        editor.remove(id);
+        editor.apply();
     }
     private void removeCity(String id) {
         for(int i = 0; i < displayCities.size(); i++){
