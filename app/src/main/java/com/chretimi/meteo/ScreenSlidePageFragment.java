@@ -46,7 +46,9 @@ public class ScreenSlidePageFragment extends Fragment {
                     Log.d("Frag "+id+" got", cityId + " it's me :)");
                     currForecasts = OWMForecast;
                     updateDisplay();
-                    ((MainActivity) getActivity()).setRefreshing(false);
+                    if(((MainActivity) getActivity()) != null){
+                        ((MainActivity) getActivity()).setRefreshing(false);
+                    }
                 }else{
                     Log.d("Frag "+id+" got", cityId + " skipping");
                 }

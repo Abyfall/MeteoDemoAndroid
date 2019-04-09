@@ -16,12 +16,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -33,7 +31,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
@@ -43,10 +40,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -84,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = findViewById(R.id.main_drawer);
+
+        Toolbar mTopToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mTopToolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_lightgrey_24dp);
@@ -99,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         pullToRefresh = findViewById(R.id.refresh_layout);
+
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -165,7 +164,24 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                toggleRefreshing(state == ViewPager.SCROLL_STATE_IDLE);
+            }
+        });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -305,6 +321,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void toggleRefreshing(boolean enabled) {
+        if (pullToRefresh != null) {
+            pullToRefresh.setEnabled(enabled);
+        }
+    }
+
     public void setRefreshing(boolean b) {
         if(this.pullToRefresh != null){
             this.pullToRefresh.setRefreshing(b);
@@ -423,4 +445,5 @@ public class MainActivity extends AppCompatActivity {
             locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationUpdateListener, null);
         }
     }
+
 }
